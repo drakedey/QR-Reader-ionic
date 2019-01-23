@@ -5,8 +5,8 @@ import { HomePage, SavedPage } from "../pages.index";
 @IonicPage()
 @Component({
   template:`
-    <ion-tabs>
-      <ion-tab tabIcon="home" tabTitle="Home" [root]="homePage"></ion-tab>
+    <ion-tabs color="primary">
+      <ion-tab tabIcon="qr-scanner" tabTitle="Scann" [root]="homePage"></ion-tab>
       <ion-tab tabIcon="bookmark" tabTitle="History" [root]="savedPage"></ion-tab>
     </ion-tabs>
   `
