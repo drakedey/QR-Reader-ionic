@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { IonicPage, NavController, Tabs } from 'ionic-angular';
+import { HistoryProvider } from '../../providers/history/history';
+import { ScanDataModel } from '../../models/scan-data.models';
+import { Subscription } from 'rxjs';
 
 /**
  * Generated class for the SavedPage page.
@@ -12,14 +15,46 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-saved',
   templateUrl: 'saved.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SavedPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  scanHistory: ScanDataModel[] = [];
+  scanHistoryObservable: Subscription;
+
+  constructor(
+    private historyService: HistoryProvider,
+    private tabs: Tabs,
+    private cdr: ChangeDetectorRef
+    ) {
+    this.scanHistory = this.historyService.getHistory();
+    console.log(this.scanHistory);
+    this.setScannHistoryObservable();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SavedPage');
+  inViewDidLeave() {
+    this.scanHistoryObservable.unsubscribe();
   }
+
+  openScan(index: number) {
+    this.historyService.openScann(index);
+    console.log(index);
+  }
+
+  setScannHistoryObservable() {
+    this.scanHistoryObservable =
+    this.historyService.
+    getHistoryObservable().subscribe( history => {
+      this.scanHistory = history;
+      console.log(this.scanHistory);
+      this.cdr.detectChanges();
+    });
+  }
+
+  goToScan() {
+    this.tabs.select(0);
+  }
+
+
 
 }

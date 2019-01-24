@@ -7,12 +7,27 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>saved</ion-title>
+    <ion-title>History</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-list *ngIf="scanHistory?.length > 0; else noHistory">
+    <ion-item *ngFor="let scan of scanHistory; let i = index" (click) = "openScan(i)">
+      <h2> Type:  {{ scan.type }} </h2>
+      <h6> Info:  {{ scan.info }} </h6>
+      <p>{{ scan.index }}</p>
+    </ion-item>
+  </ion-list>
+  <ng-template #noHistory>
+    <ion-row>
+      <ion-col text-center>
+        <h1>There's no Scan to see</h1>
+        <h3>Try to Scan a new One</h3>
+        <button ion-button block color="secondary" (click)="goToScan()">Go To Scanner</button>
+      </ion-col>
+    </ion-row>
+  </ng-template>
 </ion-content>
