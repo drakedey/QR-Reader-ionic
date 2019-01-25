@@ -30,7 +30,12 @@ plugins/ios.json
 www/
 resources/
 $RECYCLE.BIN/
+virtualenv-init/
+init/
+-/
+v-card/
 
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+secret.*

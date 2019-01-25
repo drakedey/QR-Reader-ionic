@@ -11,9 +11,13 @@ import {
   SavedPage,
   TabsPage
 } from "../pages/pages.index";
+
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { HistoryProvider } from '../providers/history/history';
+import { AgmCoreModule } from '@agm/core';
 
+//You can import it from the file you want
+import { GOOGLE_MAPS_API_KEY } from "../../secret";
 @NgModule({
   declarations: [
     MyApp,
@@ -24,7 +28,10 @@ import { HistoryProvider } from '../providers/history/history';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: GOOGLE_MAPS_API_KEY
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +46,8 @@ import { HistoryProvider } from '../providers/history/history';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     BarcodeScanner,
-    HistoryProvider
+    HistoryProvider,
+    
   ]
 })
 export class AppModule { }
