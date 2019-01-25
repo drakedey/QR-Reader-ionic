@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { InAppBrowser } from "@ionic-native/in-app-browser";
-import { Contacts, Contact, ContactField, ContactName } from '@ionic-native/contacts';
+import { Contacts, ContactField, ContactName } from '@ionic-native/contacts';
+import { EmailComposer } from '@ionic-native/email-composer';
+
 
 
 //Data models
@@ -70,6 +72,8 @@ export class HistoryProvider {
         else
           this.notidicationSubject.next({message: 'Something is wrong with your device'});
         break;
+      case 'E-mail':
+      this.sendEmail(scanData.info);
       default:
         break;
     }
@@ -132,7 +136,7 @@ export class HistoryProvider {
     });
 
     return fields;
-};
+  }
 
   private parseCoords(info: string) {
     const coords = info.replace('geo:', '');
@@ -141,5 +145,22 @@ export class HistoryProvider {
     const lng = Number(coordsArray[1]);
     return [lat, lng];
   }
+
+  private formatingEmail(info: string): string[] {
+    //removing Prefix
+    const plainTextObj = info.replace('MATMSG:', '');
+    let [to, sub, body] = plainTextObj.split(';');
+    to = to.replace('TO:', '');
+    sub = sub.replace('SUB:', '');
+    body = body.replace('BODY:', '');
+    return [to, sub, body];
+  }
+
+  private sendEmail(info: string) {
+    const [to, subject, body] = this.formatingEmail(info);
+    const email = { to, subject, body, isHtml: true };
+    EmailComposer.open(email);
+  }
+
 
 }

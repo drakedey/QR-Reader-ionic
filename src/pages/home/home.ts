@@ -31,16 +31,17 @@ export class HomePage {
       console.log('here');
       // this.historyService.addHistory('geo:40.6971494,-73.94414320429689')
       // this.historyService.addHistory('http://www.google.com');
-      this.historyService.addHistory( `BEGIN:VCARD
-VERSION:2.1
-N:Kent;Clark
-FN:Clark Kent
-ORG:
-TEL;HOME;VOICE:12345
-TEL;TYPE=cell:67890
-ADR;TYPE=work:;;;
-EMAIL:clark@superman.com
-END:VCARD` );
+//       this.historyService.addHistory( `BEGIN:VCARD
+// VERSION:2.1
+// N:Kent;Clark
+// FN:Clark Kent
+// ORG:
+// TEL;HOME;VOICE:12345
+// TEL;TYPE=cell:67890
+// ADR;TYPE=work:;;;
+// EMAIL:clark@superman.com
+// END:VCARD` );
+this.historyService.addHistory('MATMSG:to:joskarandres97@gmail.com;SUB:Hola mundo;BODY:Hola Joskar');
       return;
     }
     try {
