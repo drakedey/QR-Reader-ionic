@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class HomePage {
 
-  errHistorySubscription: Subscription;
+  notificationHistorySubscription: Subscription;
 
   constructor( 
     private barcodeScanner: BarcodeScanner,
@@ -19,18 +19,28 @@ export class HomePage {
     private platform: Platform,
     private historyService: HistoryProvider
     ) {
-      this.setErrorScanObservable();
+      this.setNotificationObservable();
   }
 
   inViewDidLeave() {
-    this.errHistorySubscription.unsubscribe();
+    this.notificationHistorySubscription.unsubscribe();
   }
 
   async doScan() {
     if(!this.platform.is('cordova')) {
       console.log('here');
-      this.historyService.addHistory('geo:40.6971494,-73.94414320429689')
+      // this.historyService.addHistory('geo:40.6971494,-73.94414320429689')
       // this.historyService.addHistory('http://www.google.com');
+      this.historyService.addHistory( `BEGIN:VCARD
+VERSION:2.1
+N:Kent;Clark
+FN:Clark Kent
+ORG:
+TEL;HOME;VOICE:12345
+TEL;TYPE=cell:67890
+ADR;TYPE=work:;;;
+EMAIL:clark@superman.com
+END:VCARD` );
       return;
     }
     try {
@@ -39,22 +49,22 @@ export class HomePage {
         this.historyService.addHistory(text);
       }
     } catch (error) {
-      this.showError(error);
+      this.showNotification(error);
     }
   }
 
-  setErrorScanObservable() {
-    this.errHistorySubscription = 
-    this.historyService.getErrorAsObservable().subscribe(err => this.showError(err));
+  setNotificationObservable() {
+    this.notificationHistorySubscription = 
+    this.historyService.getErrorAsObservable().subscribe(({ message }) => this.showNotification(message));
   }
 
-  showError(err: string) {
-    const toastErr = this.toastCtrl.create({
-      message: err,
+  showNotification(message: string) {
+    const toastNotification = this.toastCtrl.create({
+      message,
       duration: 3000
     })
 
-    toastErr.present();
+    toastNotification.present();
   }
 
 }

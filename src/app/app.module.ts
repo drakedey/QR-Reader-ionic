@@ -18,6 +18,7 @@ import { AgmCoreModule } from '@agm/core';
 
 //You can import it from the file you want
 import { GOOGLE_MAPS_API_KEY } from "../../secret";
+import { Contacts } from '@ionic-native/contacts';
 @NgModule({
   declarations: [
     MyApp,
@@ -47,7 +48,7 @@ import { GOOGLE_MAPS_API_KEY } from "../../secret";
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     BarcodeScanner,
     HistoryProvider,
-    
+    Contacts
   ]
 })
 export class AppModule { }

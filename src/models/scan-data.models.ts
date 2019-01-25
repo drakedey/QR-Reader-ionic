@@ -8,6 +8,7 @@ export class ScanDataModel {
     allowedTypes: any[] = [
       { prefix: 'http', literalType: 'URL' },
       { prefix: 'geo', literalType: 'Map' },
+      { prefix: 'BEGIN:VCARD', literalType: 'Contact' }
     ]
     constructor(text: string, index: number) {
         this.index = index;
